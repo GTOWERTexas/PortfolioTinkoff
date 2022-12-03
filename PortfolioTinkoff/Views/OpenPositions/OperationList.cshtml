@@ -1,0 +1,167 @@
+﻿@model OperationTable
+
+<div class = "row">
+ <div class = "col-md-2">
+    <table class = "table table-sm table-borderless table-dark table-striped">
+        <thead>
+            <tr>
+               <th>PayIn</th><th>value</th>
+            </tr>
+        </thead>
+        <tbody>
+          
+            @foreach (var item in Model.AllOperations)
+           {
+                    @if(item.OperationType == "Input")
+                    {
+                        <tr class = "text-muted"><td>@item.Datetime.ToShortDateString()</td><td>@item.Payment @(item.OperationCurrency != "rub" ? "$" : "₽")</td></tr>
+                      
+                    }
+                  
+                }
+                <tr><td></td><td>@(await Model.GetOpearationByTypeSumAsync("Input")) ₽</td></tr>
+        </tbody>
+    </table>
+ </div>
+ <div class = "col-md-2">
+    <table class = "table table-sm table-borderless table-dark table-striped">
+        <thead>
+            <tr>
+               <th>PayOn</th><th>value</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+           @foreach (var item in Model.AllOperations)
+           {
+                  @if(item.OperationType == "Output")
+                    {
+                        <tr class = "text-muted"><td>@item.Datetime.ToShortDateString()</td><td>@item.Payment @(item.OperationCurrency != "rub" ? "$" : "₽")</td></tr>
+                        
+                    }
+                   
+           }
+           <tr><td></td><td>@(await Model.GetOpearationByTypeSumAsync("Output")) ₽</td></tr>
+        </tbody>
+    </table>
+ </div>
+ <div class = "col-md-2">
+    <table class = "table table-sm table-borderless table-dark table-striped">
+        <thead>
+            <tr>
+              <th>PayBuy</th><th>value</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+           @foreach (var item in Model.AllOperations)
+           {
+                @if(item.OperationType == "Buy")
+                    {
+                        <tr class = "text-muted"><td>@item.Datetime.ToShortDateString()</td><td>@item.Payment @(item.OperationCurrency != "rub" ? "$" : "₽")</td></tr>
+                       
+                    }
+                  
+           }
+           <tr><td></td><td>@(await Model.GetOpearationByTypeSumAsync("Buy")) ₽</td></tr>
+        </tbody>
+    </table>
+ </div>
+  <div class = "col-md-2">
+    <table class = "table table-sm table-borderless table-dark table-striped">
+        <thead>
+            <tr>
+              <th>PaySell</th><th>value</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+           @foreach (var item in Model.AllOperations)
+           {
+                @if(item.OperationType == "Sell")
+                    {
+                        <tr class = "text-muted"><td>@item.Datetime.ToShortDateString()</td><td>@item.Payment @(item.OperationCurrency != "rub" ? "$" : "₽")</td></tr>
+                       
+                    }
+                  
+           }
+           <tr><td></td><td>@(await Model.GetOpearationByTypeSumAsync("Sell")) ₽</td></tr>
+        </tbody>
+    </table>
+ </div>
+ <div class = "col-md-2">
+    <table class = "table table-sm table-borderless table-dark table-striped">
+        <thead>
+            <tr>
+               <th>Tax oper</th><th>value</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+           @foreach (var item in Model.AllOperations)
+                {
+                    
+                    @if(item.OperationType == "Tax")
+                    {
+                        <tr class = "text-muted"><td>@item.Datetime.ToShortDateString()</td><td>@item.Payment @(item.OperationCurrency != "rub" ? "$" : "₽")</td></tr>
+                        
+                    }
+                    
+           }
+           <tr><td></td><td>@(await Model.GetOpearationByTypeSumAsync("Tax")) ₽</td></tr>
+           <tr></tr>
+           <tr><th>Dividends</th><th>value</th></tr>
+           @foreach (var item in Model.AllOperations)
+                {
+                    
+                    @if(item.OperationType == "Dividend")
+                    {
+                        <tr class = "text-muted"><td>@item.Datetime.ToShortDateString()</td><td>@item.Payment @(item.OperationCurrency != "rub" ? "$" : "₽")</td></tr>
+                        
+                    }
+                    
+           }
+           <tr><td></td><td>@(await Model.GetOpearationByTypeSumAsync("Dividend")) ₽</td></tr>
+           <tr></tr>
+           <tr><th>MarginComission</th><th>value</th></tr>
+           @foreach (var item in Model.AllOperations)
+                {
+                    
+                    @if(item.OperationType == "MarginFee")
+                    {
+                        <tr class = "text-muted"><td>@item.Datetime.ToShortDateString()</td><td>@item.Payment @(item.OperationCurrency != "rub" ? "$" : "₽")</td></tr>
+                        
+                    }
+                    
+           }
+           <tr><td></td><td>@(await Model.GetOpearationByTypeSumAsync("MarginFee")) ₽</td></tr>
+        </tbody>
+    </table>
+ </div>
+
+ <div class = "col-md-2">
+    <table class = "table table-sm table-borderless table-dark table-striped">
+        <thead>
+            <tr>
+               <th>BrokerComission</th><th>value</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+           @foreach (var item in Model.AllOperations)
+                {
+                    
+                    @if(item.OperationType == "BrokerFee")
+                    {
+                        <tr class = "text-muted"><td>@item.Datetime.ToShortDateString()</td><td>@item.Payment @(item.OperationCurrency != "rub" ? "$" : "₽")</td></tr>
+                        
+                    }
+                    
+           }
+           <tr><td></td><td>@(await Model.GetOpearationByTypeSumAsync("BrokerFee")) ₽</td></tr>
+        </tbody>
+    </table>
+    <a asp-action = "Index" class="btn btn-warning text-white">Open positions</a>
+ </div>
+
+</div>

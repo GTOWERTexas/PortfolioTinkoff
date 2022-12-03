@@ -1,0 +1,72 @@
+﻿@model MainTable
+
+<div class = "row">
+<table class = "table table-sm table-borderless table-dark table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Tiker</th>
+            <th>Balance</th>
+            <th>Currency</th>
+            <th>Ave. price</th>
+            <th>Exp. yield</th>
+            <th>Market price</th>
+            <th>% change</th>
+            <th>Market value</th>
+            <th></th>
+            <th>Tax base</th>
+            <th>Expeted tax</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.portfolioPositions)
+        {
+            <tr class = "text-muted">
+                <td>@item.Name</td>
+                <td>@item.Tiker</td>
+                <td>@item.Balance</td>
+                <td>@item.Currency</td>
+                <td>@item.AveragePrice</td>
+                <td>@item.ExpYield</td>
+                <td>@item.MarketPrice</td>
+                <td class = @(item.ExpPercent > 0 ? "text-success" : "text-danger")><b>@item.ExpPercent</b></td>
+                <td>@item.MarketCost</td>
+                <td></td>
+                <td>@item.TaxBase</td> @*Налогооблагаемая база, пока считается неправильно. Должна считаться по курсу цб*@
+                <td>@item.ExpBase</td>
+            </tr>
+        }
+        <tr class = "text-muted">
+            <td>Cash RUB</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td></td>
+            <td>@(await Model.GetCashRub())</td></tr>
+    </tbody>
+    <tfoot>
+         <tr>
+             <th></th>
+             <th></th>
+             <th></th>
+             <th></th>
+             <th></th>
+             <th></th>
+             <th>Average %</th>
+             <th class = @(Model.GetAveragePercent() > 0 ? "text-success" : "text-danger")>@Model.GetAveragePercent()</th>
+             <th>Total value</th>
+             <th>@(await Model.GetPortfolioCostRub())</th>
+         </tr>
+    </tfoot>
+
+</table>
+ <a asp-action = "OperationList" class="btn btn-sm btn-warning text-white">Operation List</a>
+</div>
+<p></p>
+<p></p>
+
+
+
